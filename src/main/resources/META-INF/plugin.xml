@@ -1,0 +1,92 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin url="https://ultimate-pa.org/">
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>de.uni_freiburg.informatik.ultimate.intellij</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Ultimate Automizer</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor url="https://www.ultimate-pa.org/">Ultimate</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    Analyze your programs using Ultimate Automizer from the Ultimate Program Analysis Framework<br>
+    For more information, view the website and tool documentation.
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+
+        <externalAnnotator language="" implementationClass="de.uni_freiburg.informatik.ultimate.intellij.annotator.UltimateAnnotator"/>
+
+        <applicationConfigurable parentId="tools"
+                                 instance="de.uni_freiburg.informatik.ultimate.intellij.config.UltimateConfigurable"
+                                 id="de.uni_freiburg.informatik.ultimate.intellij.config.UltimateConfigurable"
+                                 displayName="Ultimate Automizer"
+        />
+
+        <toolWindow id="Ultimate"
+                    icon="/META-INF/pluginIcon.svg"
+                    anchor="bottom"
+                    factoryClass="de.uni_freiburg.informatik.ultimate.intellij.window.WindowFactory"
+        />
+
+        <notificationGroup id="Ultimate"
+                displayType="BALLOON"
+                isLogByDefault="true"
+        />
+
+    </extensions>
+
+    <actions>
+        <group id="UltimateActions">
+            <action id="de.uni_freiburg.informatik.ultimate.intellij.action.AnalyseManyAction"
+                    class="de.uni_freiburg.informatik.ultimate.intellij.action.AnalyseManyAction"
+                    text="Run Ultimate Automizer on Multiple Files"
+                    description="Run Ultimate Automizer on multiple files in the current project"
+                    icon="AllIcons.Actions.RunAll"
+            />
+
+            <separator/>
+
+            <action id="de.uni_freiburg.informatik.ultimate.intellij.action.AnalyseAction"
+                    class="de.uni_freiburg.informatik.ultimate.intellij.action.AnalyseAction"
+                    text="Run Ultimate Automizer"
+                    description="Run Ultimate Automizer on the currently opened file"
+                    icon="AllIcons.Actions.Execute"
+            />
+
+        </group>
+
+        <group id="UltimateActionsSecondary">
+            <action id="de.uni_freiburg.informatik.ultimate.intellij.action.ClearAction"
+                    class="de.uni_freiburg.informatik.ultimate.intellij.action.ClearAction"
+                    text="Clear Results"
+                    description="Clear all saved results"
+                    icon="AllIcons.Actions.GC"
+            />
+
+            <separator/>
+
+            <action id="de.uni_freiburg.informatik.ultimate.intellij.action.SettingsAction"
+                    class="de.uni_freiburg.informatik.ultimate.intellij.action.SettingsAction"
+                    text="Settings"
+                    description="Open Ultimate Automizer settings"
+                    icon="AllIcons.General.GearPlain"
+            />
+        </group>
+    </actions>
+
+
+    <projectListeners>
+        <listener class="de.uni_freiburg.informatik.ultimate.intellij.window.WindowFactory" topic="com.intellij.openapi.fileEditor.FileEditorManagerListener" />
+    </projectListeners>
+</idea-plugin>
